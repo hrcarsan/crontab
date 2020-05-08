@@ -1,14 +1,8 @@
-FROM debian:10-slim
-MAINTAINER Santiago <hrcarsan@gmail.com>
+FROM alpine:3.11
+LABEL maintainer="hrcarsan@gmail.com"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  cron \
-  wget \
-&& rm -rf /var/lib/apt/lists/*
+RUN apk update --no-cache && apk add --no-cache wget
 
-COPY crontab /etc/cron.d/crontab
-COPY entry /
+COPY etc/crontabs/root /etc/crontabs/root
 
-RUN chmod +x /entry
-
-CMD /entry
+CMD ["crond", "-f", "-d", "8"]
