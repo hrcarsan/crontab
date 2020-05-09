@@ -4,5 +4,8 @@ LABEL maintainer="hrcarsan@gmail.com"
 RUN apk update --no-cache && apk add --no-cache wget
 
 COPY etc/crontabs/root /etc/crontabs/root
+COPY entry.sh /
 
-CMD ["crond", "-f", "-d", "8"]
+RUN chmod +x /entry.sh
+
+CMD /entry.sh
